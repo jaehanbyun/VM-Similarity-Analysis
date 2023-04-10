@@ -129,13 +129,13 @@ hamming_feature_weights = {
 }
 
 # Example VM metadata
-with open('metasim1.json') as m1:
+with open('metadata_sets/metasim1.json') as m1:
     vm_metadata_a = json.load(m1)
 
-with open('metasim2.json') as m2:
+with open('metadata_sets/metasim2.json') as m2:
     vm_metadata_b = json.load(m2)
 
-with open('metasim3.json') as m3:
+with open('metadata_sets/metasim3.json') as m3:
     vm_metadata_c = json.load(m3)
 
 similarity1 = metasim(vm_metadata_a, vm_metadata_b, cat_feature_weights, num_feature_weights, hamming_feature_weights, vm_categories)
