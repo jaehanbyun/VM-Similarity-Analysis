@@ -1,0 +1,36 @@
+{
+    "metadata": {
+        "name": "test",
+        "cloud provider": "Openstack",
+        "OS": {
+            "type": "Ubuntu",
+            "version": "20.04"
+        },
+        "flavor": {
+            "vcpu": 1,
+            "mem": 1024,
+            "type": "m1.small"
+        },
+        "Network": {
+            "id": "<VPC_id>",
+            "subnet_id": "<Subnet_Id>",
+            "security_group": {
+                "ingress": {
+
+                },
+                "egress": {
+
+                }
+            }
+        },
+        "Date": "2023-03-04-13:48:53",
+        "Owner": {
+            "name": "jaehan"
+        },
+        "Volume": {
+            "size": 5
+        },
+        "Status": "Running",
+        "Region": "RegionOne"
+    }
+}

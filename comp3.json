@@ -1,0 +1,36 @@
+{
+    "metadata": {
+        "name": "test3",
+        "cloud provider": "Cloudstack",
+        "OS": {
+            "type": "CentOS",
+            "version": "7"
+        },
+        "flavor": {
+            "vcpu": 1,
+            "mem": 1024,
+            "type": "m1.small"
+        },
+        "Network": {
+            "id": "<VPC_id>",
+            "subnet_id": "<Subnet_Id>",
+            "security_group": {
+                "ingress": {
+
+                },
+                "egress": {
+
+                }
+            }
+        },
+        "Date": "2023-04-04-13:48:53",
+        "Owner": {
+            "name": "jaehan"
+        },
+        "Volume": {
+            "size": 6
+        },
+        "Status": "Running",
+        "Region": "RegionOne"
+    }
+}

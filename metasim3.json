@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "name": "test3",
+    "cloud provider": "AWS",
+    "OS_type": "CentOS",
+    "OS_version": "8",
+    "flavor_vcpu": 2,
+    "flavor_mem": 4096,
+    "flavor_type": "m1.medium",
+    "Network_id": "<VPC_id>",
+    "subnet_id": "<Subnet_Id>",
+    "Date": "2023-02-20-10:15:23",
+    "owner_name": "alice",
+    "volume_size": 20,
+    "status": "Running",
+    "region": "RegionTwo"
+  }
+}
