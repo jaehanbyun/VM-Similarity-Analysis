@@ -41,8 +41,10 @@ def weighted_similarity(feature_a, feature_b, weight, feature_type):
         raise ValueError('Invalid feature type')
     return weight * similarity
 
-def cosine_similarity_one_hot(cat_a, cat_b):
-    return cosine_similarity(cat_a.reshape(1, -1), cat_b.reshape(1, -1))[0][0]
+def cosine_similarity_one_hot(one_hot_a, one_hot_b, one_hot_index, category_len):
+    cat_a = one_hot_a[:, one_hot_index:one_hot_index + category_len]
+    cat_b = one_hot_b[:, one_hot_index:one_hot_index + category_len]
+    return cosine_similarity(cat_a, cat_b)[0][0]
 
 # MetaSim algorithm
 def metasim(metadata_a, metadata_b, cat_feature_weights, num_feature_weights, hamming_feature_weights, vm_categories):
@@ -62,9 +64,9 @@ def metasim(metadata_a, metadata_b, cat_feature_weights, num_feature_weights, ha
         unique_values_b = df_b[feature].unique()
         unique_values = list(set(unique_values_a) | set(unique_values_b))
         vm_categories[feature] = unique_values
-
+    print(vm_categories)
     # One-hot encode categorical features using the provided vm_categories dictionary
-    enc = OneHotEncoder(sparse=False)
+    enc = OneHotEncoder()
     for category, values in vm_categories.items():
         combined_df[category] = pd.Categorical(combined_df[category], categories=values)
     one_hot_encoded = enc.fit_transform(combined_df)
@@ -79,7 +81,9 @@ def metasim(metadata_a, metadata_b, cat_feature_weights, num_feature_weights, ha
     one_hot_index = 0
     for feature, weight in cat_feature_weights.items():
         category_len = len(vm_categories[feature])
-        feature_sim = cosine_similarity_one_hot(one_hot_a[one_hot_index:one_hot_index + category_len], one_hot_b[one_hot_index:one_hot_index + category_len])
+        # print("Feature:", feature)
+        # print("Category length:", category_len)
+        feature_sim = cosine_similarity_one_hot(one_hot_a, one_hot_b, one_hot_index, category_len)
         total_similarity += weight * feature_sim
         one_hot_index += category_len
 
@@ -103,7 +107,6 @@ vm_categories = {
     'cloud provider': ['Openstack', 'Cloudstack', 'AWS', 'GCP', 'Azure'],
     'OS_type': ['Ubuntu', 'CentOS', 'Debian', 'Windows'],
     'OS_version': ['20.04', '18.04', '10', '8'],
-    'flavor_type': ['m1.small', 'm1.medium', 'm1.large', 'm1.xlarge'],
     'status': ['Running', 'Stopped', 'Paused', 'Suspended'],
     'region': ['RegionOne', 'RegionTwo']
 }
@@ -112,7 +115,6 @@ cat_feature_weights = {
     'cloud provider': 0.2,
     'OS_type': 0.1,
     'OS_version': 0.1,
-    'flavor_type': 0.15,
     'status': 0.1,
     'region': 0.2,
 }
@@ -137,6 +139,7 @@ with open('metadata_sets/metasim2.json') as m2:
 
 with open('metadata_sets/metasim3.json') as m3:
     vm_metadata_c = json.load(m3)
+
 
 similarity1 = metasim(vm_metadata_a, vm_metadata_b, cat_feature_weights, num_feature_weights, hamming_feature_weights, vm_categories)
 similarity2 = metasim(vm_metadata_a, vm_metadata_c, cat_feature_weights, num_feature_weights, hamming_feature_weights, vm_categories)
